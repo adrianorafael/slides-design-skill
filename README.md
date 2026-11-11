@@ -2,6 +2,8 @@
 
 **Uma skill para o Claude que transforma dados em slides executivos prontos para decidir.**
 
+**[Guia de instalação e uso](https://adrianorafael.github.io/slides-design-skill/)**
+
 A Slides Design Skill atua como diretor de arte de apresentações executivas e de vendas. Ela escreve o título de ação, escolhe o gráfico certo entre 46 formas testadas, aplica um design system com cores de significado validado e critica o próprio slide antes de entregar o PowerPoint.
 
 ![Capa do deck de exemplo](docs/images/01-capa.png)

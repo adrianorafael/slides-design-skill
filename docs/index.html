@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slides Design Skill</title>
+<meta name="description" content="Uma skill para o Claude que transforma dados em slides executivos prontos para decidir. Guia de instalação e uso.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0B1B3F; --body:#4A5568; --mid:#8A94A6; --mute:#D3D8E0; --hair:#E6EAF0; --tint:#F4F6F9; --paper:#FFFFFF;
+  --azul:#1F5EFF; --azul-tint:#E8EEFF; --azul-light:#8FB0FF;
+  --ciano:#0BA5D8; --ciano-text:#0779A6; --ciano-tint:#E0F6FC; --ciano-light:#5CD3F5;
+  --violeta:#6E56F8; --violeta-tint:#EEEBFF; --violeta-light:#B3A6FF;
+  --critico:#D92D20; --critico-tint:#FDECEA; --critico-light:#FF7A6E;
+  --dark-card:#1A2B55; --soft:#C3CCE0;
+  --max:1080px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,"Aptos",system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--azul)}
+img{width:100%;height:auto;display:block}
+html,body{overflow-x:hidden}
+.wrap{min-width:0}
+.grid>*{min-width:0}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+.pill{display:inline-block;background:var(--azul-tint);color:var(--azul);font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;padding:6px 14px;border-radius:999px}
+.dark .pill{background:var(--dark-card);color:var(--azul-light)}
+h1,h2,h3{line-height:1.15;margin:0}
+h2{font-size:clamp(28px,4vw,40px);font-weight:800;letter-spacing:-.02em;margin:14px 0 14px}
+h2 em,h1 em{font-style:normal;color:var(--azul)}
+.dark h2 em,.dark h1 em{color:var(--ciano-light)}
+.lead{font-size:18px;color:var(--body);max-width:68ch;margin:0 0 36px}
+section{padding:84px 0}
+.dark{background:var(--ink);color:#fff}
+.dark .lead{color:var(--soft)}
+.tintbg{background:var(--tint)}
+
+/* nav */
+nav{position:sticky;top:0;z-index:10;background:rgba(11,27,63,.92);backdrop-filter:blur(8px);border-bottom:1px solid #1A2B55}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:56px;gap:16px}
+nav b{color:#fff;font-weight:800;letter-spacing:-.01em;white-space:nowrap}
+nav .links{display:flex;gap:22px;overflow-x:auto;scrollbar-width:none}
+nav .links a{color:var(--soft);text-decoration:none;font-size:14px;font-weight:500;white-space:nowrap}
+nav .links a:hover{color:#fff}
+nav .gh{background:var(--azul);color:#fff!important;padding:7px 14px;border-radius:8px;font-weight:700}
+
+/* hero */
+.hero{padding:88px 0 96px;position:relative;overflow:hidden}
+.mosaic{position:absolute;right:-40px;top:-30px;display:grid;grid-template-columns:repeat(4,72px);gap:12px;opacity:.9;transform:rotate(8deg)}
+.mosaic i{display:block;width:72px;height:72px;border-radius:18px}
+.mosaic i:nth-child(3n+1){background:var(--azul)}
+.mosaic i:nth-child(3n+2){background:var(--ciano)}
+.mosaic i:nth-child(3n){background:var(--violeta)}
+.mosaic i:nth-child(5n){background:var(--dark-card)}
+.hero .wrap{position:relative}
+.hero h1{font-size:clamp(38px,6.4vw,68px);font-weight:800;letter-spacing:-.03em;margin:22px 0 20px;max-width:15ch}
+.hero p{font-size:20px;color:var(--soft);max-width:56ch;margin:0 0 34px}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;padding:13px 22px;border-radius:10px;font-weight:700;text-decoration:none;font-size:15px}
+.btn.primary{background:var(--azul);color:#fff}
+.btn.primary:hover{background:#174BD1}
+.btn.ghost{border:1.5px solid #34467A;color:#fff}
+.btn.ghost:hover{border-color:var(--azul-light)}
+.heroimg{margin-top:56px;border-radius:16px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45);border:1px solid #1A2B55}
+
+/* cards */
+.grid{display:grid;gap:20px}
+.g3{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.g2{grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}
+.card{border-radius:16px;padding:28px;background:var(--azul-tint)}
+.card:nth-child(3n+2){background:var(--ciano-tint)}
+.card:nth-child(3n){background:var(--violeta-tint)}
+.card h3{font-size:19px;font-weight:800;margin-bottom:8px;letter-spacing:-.01em}
+.card p{margin:0;color:var(--body);font-size:15.5px}
+.card .n{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:10px;background:var(--azul);color:#fff;font-weight:800;margin-bottom:14px}
+.card:nth-child(3n+2) .n{background:var(--ciano)}
+.card:nth-child(3n) .n{background:var(--violeta)}
+
+/* steps */
+.steps{counter-reset:s;display:grid;gap:18px}
+.step{display:grid;grid-template-columns:56px 1fr;gap:18px;align-items:start}
+.step:before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:56px;height:56px;border-radius:16px;background:var(--azul);color:#fff;font-weight:800;font-size:22px}
+.step h3{font-size:20px;font-weight:800;margin-bottom:4px}
+.step p{margin:0 0 10px;color:var(--body)}
+
+/* code */
+pre{background:var(--ink);color:#E8EEFF;border-radius:12px;padding:18px 20px;overflow-x:auto;font:500 14px/1.65 ui-monospace,SFMono-Regular,Menlo,monospace;margin:10px 0 0;position:relative}
+pre .c{color:var(--mid)}
+.tabs{display:flex;gap:8px;margin:0 0 4px;flex-wrap:wrap}
+.tab{border:1.5px solid var(--mute);background:#fff;color:var(--body);padding:8px 16px;border-radius:999px;font:700 14px Inter,sans-serif;cursor:pointer}
+.tab[aria-selected=true]{background:var(--azul);border-color:var(--azul);color:#fff}
+.panel[hidden]{display:none}
+.copy{position:absolute;top:10px;right:10px;background:#1A2B55;color:var(--soft);border:0;border-radius:8px;padding:5px 11px;font:700 12px Inter,sans-serif;cursor:pointer}
+.copy:hover{color:#fff}
+.note{background:var(--azul-tint);border-radius:12px;padding:16px 20px;color:var(--ink);font-size:15px;margin-top:18px}
+.note b{color:var(--azul)}
+
+/* prompts */
+.prompt{background:#fff;border:1px solid var(--hair);border-left:5px solid var(--azul);border-radius:12px;padding:20px 22px;font-size:16px;margin:0}
+.prompt small{display:block;font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:11px;color:var(--azul);margin-bottom:6px}
+.prompt:nth-child(3n+2){border-left-color:var(--ciano)}
+.prompt:nth-child(3n+2) small{color:var(--ciano-text)}
+.prompt:nth-child(3n){border-left-color:var(--violeta)}
+.prompt:nth-child(3n) small{color:var(--violeta)}
+
+/* gallery */
+.shot{margin:0;background:#fff;border-radius:14px;overflow:hidden;border:1px solid var(--hair);box-shadow:0 8px 28px rgba(11,27,63,.07)}
+.shot figcaption{padding:12px 16px;font-size:14px;color:var(--body)}
+.shot figcaption b{color:var(--ink)}
+
+/* palette */
+.swatches{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:32px}
+.sw{border-radius:14px;padding:16px;min-height:132px;display:flex;flex-direction:column;justify-content:flex-end;color:#fff;font-size:13px}
+.sw b{font-size:16px;display:block}
+.sw code{opacity:.85}
+.sw.l{color:var(--ink);border:1px solid var(--hair)}
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.rule{background:var(--dark-card);border-radius:16px;padding:24px}
+.rule h3{font-size:18px;margin-bottom:6px;color:#fff}
+.rule p{margin:0;color:var(--soft);font-size:15px}
+.rule.x{background:var(--critico-tint)}
+.rule.x h3{color:var(--critico)}
+.rule.x p{color:#5B2A25}
+.dots{display:flex;gap:8px;margin-top:10px}
+.dots span{width:22px;height:22px;border-radius:50%}
+
+/* families */
+.fam{display:flex;flex-wrap:wrap;gap:10px}
+.fam span{background:#fff;border:1px solid var(--hair);border-radius:999px;padding:8px 16px;font-size:14px;font-weight:500}
+.fam span b{color:var(--azul);margin-left:6px}
+
+/* check */
+.checks{columns:2 340px;column-gap:28px;padding:0;margin:0;list-style:none;counter-reset:c}
+.checks li{break-inside:avoid;padding:10px 0 10px 44px;position:relative;border-bottom:1px solid var(--hair);font-size:15.5px}
+.checks li:before{counter-increment:c;content:counter(c);position:absolute;left:0;top:9px;width:30px;height:30px;border-radius:9px;background:var(--azul-tint);color:var(--azul);font-weight:800;display:grid;place-items:center;font-size:14px}
+.checks li.last:before{background:var(--violeta-tint);color:var(--violeta)}
+
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+th{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--mid)}
+td:first-child{color:var(--body)}
+td:last-child b{color:var(--azul)}
+.tw{overflow-x:auto}
+
+footer{background:var(--ink);color:var(--soft);padding:48px 0;font-size:14px}
+footer a{color:var(--azul-light)}
+footer .row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+
+@media (max-width:760px){
+  section{padding:60px 0}
+  .mosaic{opacity:.35;right:-90px}
+  nav .links a:not(.gh){display:none}
+  .step{grid-template-columns:44px 1fr}
+  .step:before{width:44px;height:44px;font-size:18px;border-radius:12px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <b>Slides Design Skill</b>
+    <div class="links">
+      <a href="#o-que-faz">O que faz</a>
+      <a href="#instalar">Instalar</a>
+      <a href="#usar">Como usar</a>
+      <a href="#fluxo">Fluxo</a>
+      <a href="#design-system">Design system</a>
+      <a href="#exemplo">Exemplo</a>
+      <a class="gh" href="https://github.com/adrianorafael/slides-design-skill">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero dark">
+  <div class="mosaic" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="wrap">
+    <span class="pill">Skill para o Claude</span>
+    <h1>Dados viram slides prontos para <em>decidir</em></h1>
+    <p>A Slides Design Skill atua como diretor de arte de apresentações executivas e de vendas: escreve o título de ação, escolhe o gráfico certo entre 46 formas, aplica um design system com cores de significado e critica o próprio slide antes de entregar o PowerPoint.</p>
+    <div class="btns">
+      <a class="btn primary" href="#instalar">Instalar a skill</a>
+      <a class="btn ghost" href="https://github.com/adrianorafael/slides-design-skill">Ver no GitHub</a>
+    </div>
+    <div class="heroimg"><img src="images/01-capa.png" alt="Capa do deck de exemplo gerado pela skill" width="961" height="540"></div>
+  </div>
+</header>
+
+<section id="o-que-faz">
+  <div class="wrap">
+    <span class="pill">O que ela faz</span>
+    <h2>Seis hábitos de quem <em>desenha para executivos</em></h2>
+    <p class="lead">Um executivo decide em segundos se o slide merece atenção. A skill entrega a conclusão no título, a prova no gráfico e nada mais.</p>
+    <div class="grid g3">
+      <div class="card"><span class="n">1</span><h3>Títulos de ação</h3><p>Troca rótulo de tópico ("Resultados da POC") por conclusão com número ("POC encontrou a causa raiz em 4 min, contra 2 h hoje"). Encurtar nunca autoriza afirmar mais do que o dado mostra.</p></div>
+      <div class="card"><span class="n">2</span><h3>Gráfico certo</h3><p>Parte do verbo do título, filtra pelo formato dos dados e pelo contexto da audiência. São 46 formas, cada uma com quando usar, quando evitar e título-modelo.</p></div>
+      <div class="card"><span class="n">3</span><h3>Gestalt e destaque único</h3><p>Cinza para o contexto, uma cor para a prova, rótulos diretos no lugar de legenda. O olho vai ao título e depois ao dado.</p></div>
+      <div class="card"><span class="n">4</span><h3>Design system Sinal</h3><p>Cor é significado: marca em tons frios, vermelho só como status crítico. Todos os pares de texto passam no contraste WCAG.</p></div>
+      <div class="card"><span class="n">5</span><h3>Roteiros de vendas</h3><p>POC, business case e ROI, discovery, QBR, comparativo com concorrente, RFP, pós-incidente e resultado comercial.</p></div>
+      <div class="card"><span class="n">6</span><h3>Crítica obrigatória</h3><p>Renderiza, responde 13 checagens (da mensagem em 3 segundos à semântica de cor) e corrige antes de entregar.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="instalar" class="tintbg">
+  <div class="wrap">
+    <span class="pill">Instalar</span>
+    <h2>Duas formas, <em>cinco minutos</em></h2>
+    <p class="lead">A skill é a pasta <code>skill/slides-design-skill/</code>, com o <code>SKILL.md</code> dentro. Primeiro clone o repositório.</p>
+<pre><button class="copy" data-copy>Copiar</button>git clone https://github.com/adrianorafael/slides-design-skill.git
+cd slides-design-skill</pre>
+
+    <div style="height:28px"></div>
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" aria-selected="true" data-tab="cc">Claude Code</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="app">Claude (app e web)</button>
+    </div>
+    <div class="panel" id="p-cc">
+<pre><button class="copy" data-copy>Copiar</button><span class="c"># pessoal (vale para todos os projetos)</span>
+cp -r skill/slides-design-skill ~/.claude/skills/
+
+<span class="c"># ou só no projeto atual</span>
+cp -r skill/slides-design-skill .claude/skills/</pre>
+    </div>
+    <div class="panel" id="p-app" hidden>
+<pre><button class="copy" data-copy>Copiar</button>./scripts/package.sh        <span class="c"># cria dist/slides-design-skill.zip</span></pre>
+      <p style="color:var(--body);margin:14px 0 0">Depois envie o <code>.zip</code> na área de <b>Skills</b> das configurações do Claude.</p>
+    </div>
+
+    <div class="note"><b>Dependência.</b> A Slides Design Skill é a camada de narrativa, gráfico e design. A mecânica do arquivo <code>.pptx</code> (pptxgenjs, edição de template, validação e renderização) vem da skill <code>pptx</code>, que precisa estar disponível no mesmo ambiente.</div>
+  </div>
+</section>
+
+<section id="usar">
+  <div class="wrap">
+    <span class="pill">Como usar</span>
+    <h2>Diga a <em>decisão</em> e mande os dados</h2>
+    <p class="lead">Não precisa chamar a skill pelo nome: peça o deck ou a revisão e ela entra sozinha. Quanto mais clara a decisão esperada, melhor o roteiro.</p>
+    <div class="grid g2">
+      <p class="prompt"><small>Criar um deck</small>Monte o deck de resultado da POC para o comitê de compras. Decisão esperada: aprovar a implantação. Dados em anexo.</p>
+      <p class="prompt"><small>Revisar um deck</small>Revise este deck: reescreva os títulos como títulos de ação e troque os gráficos que não provam o título.</p>
+      <p class="prompt"><small>Escolher o gráfico</small>Tenho o tempo de resposta do checkout por hora, com um SLA de 2 s. Qual gráfico prova que o pico estourou o limite?</p>
+      <p class="prompt"><small>Usar a sua marca</small>Aplique o template em anexo (.pptx) neste roteiro de QBR. Se faltar gráfico na biblioteca, desenhe com formas.</p>
+    </div>
+    <h3 style="margin:44px 0 14px;font-size:22px;font-weight:800">O que você recebe de volta</h3>
+    <div class="grid g3">
+      <div class="card"><h3>O .pptx</h3><p>Com tema de PowerPoint aplicado e gráficos nativos editáveis sempre que a forma existe.</p></div>
+      <div class="card"><h3>O roteiro</h3><p>Só os títulos de ação, em sequência. Lidos sozinhos, contam a história e terminam num pedido.</p></div>
+      <div class="card"><h3>As premissas</h3><p>O que foi assumido (audiência, uso, decisão) e quais gráficos são nativos ou desenhados com formas.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="fluxo" class="dark">
+  <div class="wrap">
+    <span class="pill">Fluxo de trabalho</span>
+    <h2>Do pedido ao slide, <em>em seis passos</em></h2>
+    <p class="lead">A ordem importa: a mensagem vem antes do visual. Se o roteiro de títulos não conta a história, o problema é de raciocínio, não de design.</p>
+    <div class="steps">
+      <div class="step"><div><h3>Decisão</h3><p style="color:var(--soft)">Audiência, decisão esperada e uso (ao vivo ou lido sozinho). Se você não disse, ela assume "ao vivo, diretoria, aprovar um próximo passo" e avisa na entrega.</p></div></div>
+      <div class="step"><div><h3>Roteiro só com títulos de ação</h3><p style="color:var(--soft)">Sequência de conclusões com número, partindo do contexto de vendas quando ele se aplica.</p></div></div>
+      <div class="step"><div><h3>Ficha de cada slide</h3><p style="color:var(--soft)">Título de ação, dado que prova, forma, o que recebe o destaque, anotação e o "e daí?". Sem "dado que prova", o slide ainda não tem mensagem.</p></div></div>
+      <div class="step"><div><h3>Sistema visual</h3><p style="color:var(--soft)">Modo template, se você trouxe .pptx ou marca. Modo mini design system (Sinal), se não trouxe.</p></div></div>
+      <div class="step"><div><h3>Construção</h3><p style="color:var(--soft)">Receitas em pptxgenjs, com gráficos nativos sempre que a forma existir.</p></div></div>
+      <div class="step"><div><h3>Crítica e correção</h3><p style="color:var(--soft)">Renderiza, passa pelas 13 checagens de designer e corrige. Uma rodada é o mínimo.</p></div></div>
+    </div>
+    <div class="note" style="background:var(--dark-card);color:var(--soft)"><b style="color:var(--ciano-light)">Ordem de desempate.</b> Quando duas regras conflitam: 1) verdade dos dados, 2) clareza da mensagem, 3) marca do usuário, 4) beleza. Um slide bonito que exagera o dado perde a venda.</div>
+  </div>
+</section>
+
+<section id="titulos">
+  <div class="wrap">
+    <span class="pill">Títulos de ação</span>
+    <h2>O título afirma a conclusão, <em>o corpo prova</em></h2>
+    <p class="lead">Fórmula: sujeito, verbo forte e resultado quantificado. Uma linha é o alvo, duas é o teto, e o número vai na cor de destaque.</p>
+    <div class="tw"><table>
+      <thead><tr><th>Em vez de</th><th>Escreva</th></tr></thead>
+      <tbody>
+        <tr><td>Análise de vendas do 4º trimestre</td><td><b>Vendas do 4º tri cresceram 12%, puxadas pelo canal digital</b></td></tr>
+        <tr><td>Tempo de resposta por aplicação</td><td><b>Checkout responde 3x mais devagar que o restante da jornada</b></td></tr>
+        <tr><td>Resultados da POC</td><td><b>POC encontrou a causa raiz em 4 min, contra 2 h hoje</b></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<section id="graficos" class="tintbg">
+  <div class="wrap">
+    <span class="pill">Catálogo</span>
+    <h2>46 formas, escolhidas <em>pelo verbo do título</em></h2>
+    <p class="lead">Cada forma traz quando usar, quando evitar, título-modelo, destaque e receita de construção. O caminho: verbo do título, formato dos dados, contexto da audiência e um teste antes de construir.</p>
+    <div class="fam" style="margin-bottom:36px">
+      <span>Indicadores<b>3</b></span><span>Comparação<b>9</b></span><span>Tempo<b>7</b></span><span>Parte do todo<b>7</b></span><span>Distribuição e relação<b>6</b></span><span>Fluxo e processo<b>2</b></span><span>Geografia<b>1</b></span><span>Observabilidade<b>9</b></span><span>Plano<b>2</b></span>
+    </div>
+    <div class="grid g2">
+      <figure class="shot"><img src="images/23-catalogo.png" alt="Catálogo das 46 formas" loading="lazy" width="961" height="540"><figcaption><b>Catálogo.</b> Todas as formas numa vista só.</figcaption></figure>
+      <figure class="shot"><img src="images/16-halteres.png" alt="Gráfico de halteres com status crítico" loading="lazy" width="961" height="540"><figcaption><b>Halteres.</b> Meta contra realizado, vermelho só no que viola o limite.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="design-system" class="dark">
+  <div class="wrap">
+    <span class="pill">Design system Sinal</span>
+    <h2>Cada cor tem um significado, e <em>cada significado foi validado</em></h2>
+    <p class="lead">Padrão usado quando você não traz template nem marca. Regra-mãe: cor é significado. Cor de marca só em tons frios; cor de status só quando o dado tem aquele sentido.</p>
+    <div class="swatches">
+      <div class="sw" style="background:#1F5EFF"><b>Azul</b>Marca e ação<code>#1F5EFF</code></div>
+      <div class="sw" style="background:#0BA5D8"><b>Ciano</b>Energia<code>#0BA5D8</code></div>
+      <div class="sw" style="background:#6E56F8"><b>Violeta</b>Variedade<code>#6E56F8</code></div>
+      <div class="sw" style="background:#D92D20"><b>Vermelho</b>Status crítico<code>#D92D20</code></div>
+      <div class="sw" style="background:#1A2B55;border:1px solid #34467A"><b>Tinta</b>Texto e fundo<code>#0B1B3F</code></div>
+      <div class="sw l" style="background:#F4F6F9"><b>Cinzas</b>Contexto<code>#4A5568 · #8A94A6 · #D3D8E0</code></div>
+    </div>
+    <div class="rules">
+      <div class="rule"><h3>Uma cor para a prova</h3><p>Tudo o que não é a prova fica em cinza. O destaque padrão é o azul, a cor de link e de botão.</p></div>
+      <div class="rule"><h3>Vermelho só com limite escrito</h3><p>Aparece quando o dado viola um limite (SLO, prazo, capacidade), com o limite no slide. Nunca em marca ou CTA.</p></div>
+      <div class="rule x"><h3>Fora como enfeite</h3><p>Amarelo, laranja e verde já têm significado em painéis de TI. Usá-los como enfeite faria o executivo ler perigo onde há convite.</p>
+        <div class="dots"><span style="background:#F5B800"></span><span style="background:#FF7A1A"></span><span style="background:#16A34A"></span></div></div>
+    </div>
+    <div style="margin-top:36px" class="grid g2">
+      <figure class="shot" style="background:var(--dark-card);border-color:#34467A"><img src="images/08-design-system.png" alt="Slide do design system Sinal" loading="lazy" width="961" height="540"></figure>
+      <figure class="shot" style="background:var(--dark-card);border-color:#34467A"><img src="images/05-chamada-dm.png" alt="Chamada para ação em azul de link" loading="lazy" width="961" height="540"></figure>
+    </div>
+    <p class="lead" style="margin:28px 0 0">Tokens em <a href="https://github.com/adrianorafael/slides-design-skill/blob/main/design-system/sinal.tokens.json" style="color:var(--ciano-light)">sinal.tokens.json</a>; o contraste é conferido por <code>scripts/contrast.py</code>.</p>
+  </div>
+</section>
+
+<section id="critica">
+  <div class="wrap">
+    <span class="pill">Crítica de designer</span>
+    <h2>Treze perguntas antes de <em>entregar</em></h2>
+    <p class="lead">A skill olha o slide renderizado como se fosse de outra pessoa. O que falha é corrigido e renderizado de novo.</p>
+    <ol class="checks">
+      <li><b>Três segundos:</b> a mensagem é o título?</li>
+      <li><b>Para onde o olho vai primeiro?</b> Título, depois o dado.</li>
+      <li><b>Título e gráfico:</b> mesmo número, mesma unidade.</li>
+      <li><b>Honestidade:</b> causa sem suporte? Barra fora do zero?</li>
+      <li><b>Forma certa:</b> existe uma mais simples que prova?</li>
+      <li><b>Colisões:</b> rótulos encostando, título com palavra órfã.</li>
+      <li><b>Espaço:</b> vazio grande ao lado de gráfico pequeno.</li>
+      <li><b>Legenda:</b> dá para trocar por rótulo direto?</li>
+      <li><b>Conjunto:</b> títulos alinhados, mesma cor, mesmo significado.</li>
+      <li><b>Só os títulos:</b> contam a história e terminam num pedido?</li>
+      <li><b>Número e unidade:</b> juntos na mesma linha.</li>
+      <li><b>Build limpo:</b> sem avisos de cor e com o validador passando.</li>
+      <li class="last"><b>Semântica de cor:</b> status nunca como enfeite.</li>
+    </ol>
+  </div>
+</section>
+
+<section id="exemplo" class="tintbg">
+  <div class="wrap">
+    <span class="pill">Exemplo de referência</span>
+    <h2>O pitch da skill, <em>feito com a skill</em></h2>
+    <p class="lead">A pasta <code>examples/pitch-deck/</code> traz 25 slides no design system Sinal: o .pptx, o .pdf e o gerador em pptxgenjs.</p>
+    <div class="btns" style="margin-bottom:28px">
+      <a class="btn primary" href="https://github.com/adrianorafael/slides-design-skill/raw/main/examples/pitch-deck/Slides_Design_Skill_pitch.pdf">Abrir o PDF</a>
+      <a class="btn ghost" style="border-color:var(--mute);color:var(--ink)" href="https://github.com/adrianorafael/slides-design-skill/tree/main/examples/pitch-deck">Ver os arquivos</a>
+    </div>
+<pre><button class="copy" data-copy>Copiar</button>cd examples/pitch-deck
+PPTX_SKILL_DIR=/caminho/da/skill/pptx node deck.js   <span class="c"># aplica as cores ao tema do PowerPoint</span>
+python3 post.py Slides_Design_Skill_pitch.pptx       <span class="c"># lacunas de séries e número junto da unidade</span></pre>
+    <figure class="shot" style="margin-top:28px"><img src="images/20-mapa-de-servicos.png" alt="Slide de mapa de serviços" loading="lazy" width="961" height="540"><figcaption><b>Observabilidade como língua nativa.</b> Os dados da galeria são ilustrativos, de um e-commerce e de um checkout fictícios.</figcaption></figure>
+    <div class="note"><b>Fonte.</b> Aptos é a padrão. Se ela não estiver instalada onde a conferência é renderizada, o LibreOffice usa uma fonte mais larga, e a conferência fica conservadora. Para um PDF fiel, exporte pelo PowerPoint (Arquivo, Exportar, PDF).</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap row">
+    <div><b style="color:#fff">Slides Design Skill</b><br>Licença MIT. Veja também o <a href="https://github.com/adrianorafael/slides-design-skill/blob/main/SPEC.md">SPEC</a>, o <a href="https://github.com/adrianorafael/slides-design-skill/blob/main/CHANGELOG.md">CHANGELOG</a> e o <a href="https://github.com/adrianorafael/slides-design-skill/blob/main/CONTRIBUTING.md">guia de contribuição</a>.</div>
+    <div><a href="https://github.com/adrianorafael/slides-design-skill">github.com/adrianorafael/slides-design-skill</a></div>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.tab').forEach(function(t){
+  t.addEventListener('click',function(){
+    document.querySelectorAll('.tab').forEach(function(x){x.setAttribute('aria-selected',x===t)});
+    document.getElementById('p-cc').hidden=t.dataset.tab!=='cc';
+    document.getElementById('p-app').hidden=t.dataset.tab!=='app';
+  });
+});
+document.querySelectorAll('[data-copy]').forEach(function(b){
+  b.addEventListener('click',function(){
+    var pre=b.parentElement, txt=pre.innerText.replace(/^Copiar\s*/,'').replace(/Copiado!\s*/,'');
+    if(navigator.clipboard){navigator.clipboard.writeText(txt).then(function(){b.textContent='Copiado!';setTimeout(function(){b.textContent='Copiar'},1500)})}
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "name": "Sinal",
+  "description": "Design system padrão da Slides Design Skill. Regra-mãe: cor é significado. Marca em tons frios; vermelho só como status crítico; amarelo, laranja e verde fora do sistema como enfeite.",
+  "version": "1.0.0",
+  "font": {
+    "family": { "$value": "Aptos", "$description": "Títulos e texto. Não usar Calibri." },
+    "weights": { "$value": ["regular", "bold"] }
+  },
+  "brand": {
+    "azul": {
+      "fill": { "$value": "#1F5EFF" }, "text": { "$value": "#1F5EFF", "$description": "5,1:1 sobre branco" },
+      "tint": { "$value": "#E8EEFF" }, "light": { "$value": "#8FB0FF", "$description": "versão para fundo tinta" },
+      "role": "Confiança e ação (cor de link e botão). Destaque padrão, CTA, etiquetas de seção."
+    },
+    "ciano": {
+      "fill": { "$value": "#0BA5D8", "$description": "2,8:1 sobre branco: não usar como texto em fundo claro" },
+      "text": { "$value": "#0779A6", "$description": "4,9:1 sobre branco" },
+      "tint": { "$value": "#E0F6FC" }, "light": { "$value": "#5CD3F5", "$description": "9,7:1 sobre tinta" },
+      "role": "Energia tecnológica. Formas, mosaico e fundo escuro."
+    },
+    "violeta": {
+      "fill": { "$value": "#6E56F8" }, "text": { "$value": "#6E56F8", "$description": "4,8:1 sobre branco" },
+      "tint": { "$value": "#EEEBFF" }, "light": { "$value": "#B3A6FF" },
+      "role": "Terceira cor de marca: categorias, mosaico e cartões."
+    }
+  },
+  "status": {
+    "critico": {
+      "fill": { "$value": "#D92D20" }, "text": { "$value": "#D92D20", "$description": "4,8:1 sobre branco" },
+      "tint": { "$value": "#FDECEA" }, "light": { "$value": "#FF7A6E", "$description": "6,6:1 sobre tinta" },
+      "role": "Só quando o dado viola um limite (SLO, prazo, capacidade), com o limite escrito no slide. Nunca em marca ou CTA."
+    }
+  },
+  "neutral": {
+    "ink": { "$value": "#0B1B3F", "$description": "títulos, texto e fundo escuro; 16,9:1 sobre branco" },
+    "body": { "$value": "#4A5568", "$description": "texto secundário, eixos; 7,5:1" },
+    "mid": { "$value": "#8A94A6", "$description": "série de comparação" },
+    "mute": { "$value": "#D3D8E0", "$description": "demais dados de contexto" },
+    "hair": { "$value": "#E6EAF0", "$description": "grade leve, o que saiu" },
+    "tint": { "$value": "#F4F6F9", "$description": "região comum, trilhos" },
+    "paper": { "$value": "#FFFFFF", "$description": "fundo claro" },
+    "darkCard": { "$value": "#1A2B55", "$description": "cartão em fundo tinta" },
+    "soft": { "$value": "#C3CCE0", "$description": "texto secundário em fundo tinta" }
+  },
+  "semantic": {
+    "tagBg": { "$value": "{brand.azul.tint}" },
+    "tagFg": { "$value": "{brand.azul.text}" },
+    "tone": {
+      "neutro": { "accent": "{brand.azul.text}", "accentLight": "{brand.azul.light}", "accentTint": "{brand.azul.tint}" },
+      "critico": { "accent": "{status.critico.text}", "accentLight": "{status.critico.light}", "accentTint": "{status.critico.tint}" }
+    },
+    "categoricalRotation": ["azul", "ciano", "violeta"]
+  },
+  "excludedAsDecoration": {
+    "amarelo": "atenção em painéis de TI",
+    "laranja": "alerta",
+    "verde": "saudável; só como status de meta cumprida, com a meta escrita"
+  },
+  "powerpointTheme": {
+    "dk1": "#0B1B3F", "lt1": "#FFFFFF", "dk2": "#4A5568", "lt2": "#F4F6F9",
+    "accent1": "#1F5EFF", "accent2": "#0BA5D8", "accent3": "#6E56F8", "accent4": "#D92D20", "accent5": "#8A94A6", "accent6": "#D3D8E0",
+    "hlink": "#1F5EFF", "folHlink": "#4A5568"
+  }
+}
